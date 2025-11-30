@@ -1333,7 +1333,7 @@ CS2_APP_ID = 730
 >[!note]
 Используемые технологии и библиотеки:
 **python 3.14**
-`turtle, tkinter, colorama, plyer, yaspin, time, os`
+`turtle, tkinter, colorama, plyer, yaspin, time, os` и `webbrowser`
 
 ### Статистика главы:
     Всего строк кода: 2000+
