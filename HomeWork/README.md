@@ -1,18 +1,13 @@
 
 <div align="center">
 
-<div style="
-  background: linear-gradient(45deg, #ff0000ff, #000000ff);
-  color: white; 
-  padding: 20px;
-  border-radius: 19px;
-  text-align: center;
-  border: 3px solid #fe0202ff;
-">
-  <h2>HomeWork</h2>
-  <p></p>
+<div style=
+ 
+>
 
 </div>
+
+# HomeWork
 
 ## Добро пожаловать в папку с моими домашними заданиями.
 

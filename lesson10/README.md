@@ -1,12 +1,6 @@
 <div align="center">
 
 <div style="
-  background: linear-gradient(45deg, #0cf270ff, #000000ff);
-  color: white; 
-  padding: 20px;
-  border-radius: 19px;
-  text-align: center;
-  border: 3px solid #00ff84ff;
 ">
   <h2>Lesson_10</h2>
   <p></p>
