@@ -80,6 +80,99 @@ Part.Parent = workspace
 ```
 Перемещает Парт в `workspace`(чтобы игрок видел этот парт)
 
+# Quiz.html
+
+```html
+<html>
+	<head>
+		<title>Викторина</title>
+	</head>
+	<body bgcolor=lemonchiffon>
+		<img src='quiz.jpg'>
+		<h1>Викторина!</h1>
+		<button onclick=quiz() style="background: indianred; width: 480; height: 100; font-size: 30; color: white">Начать игру</button>
+		<script>
+			function quiz() {
+				var questions = [
+					{
+						question: "Сколько дней в году?\n(a) 360\n(b) 370\n(c) 365",
+						answer: "c"
+					},
+					{
+						question: "В каком году был основан Санкт-Петербург?\n(a) 1113\n(b) 1703\n(c) 1804",
+						answer: "b"	
+					},
+					{
+						question: "Как звали последнего царя в России?\n(a) Николай\n(b) Александр\n(c) Иван",
+						answer: "a"					
+					},
+					{
+						question: "Столица Франции?\n(a) Мадрид\n(b) Рим\n(c) Париж",
+						answer: "c"	
+					},
+					{
+						question: "Сколько камазов поместится в один спичечный коробочек?\n(a) 0\n(b) 0.1\n(c) я не знаю!!!",
+						answer: "b"					
+					}
+				];
+				var score = 0;
+				for (let i=0; i < questions.length; i++) {
+					var response = prompt(questions[i].question);
+					if (response == questions[i].answer) {
+						score++;
+						alert("Верно!");
+					} else {
+						alert("Неверно!");
+					}
+				}
+				alert("Игра закончена, у вас " + score + "/" + questions.length);
+			}
+		</script>
+	</body>
+</html>
+```
+
+>[!tip]
+> ### Что делает этот код?
+> Это веб-страница с викториной из 5 вопросов на общие знания.
+
+>[!note]
+> ### Понятия в коде
+
+Начало HTML документа
+```html
+<html>
+```
+Заголовок Страницы
+```html
+<head>
+    <title>Викторина</title>
+</head>
+```
+Тело страницы
+```html
+<body bgcolor=lemonchiffon>
+```
+Изображение
+```html
+<img src='quiz.jpg'>
+```
+Заголовок викторины
+```html
+<h1>Викторина!</h1>
+```
+Кнопка запуска
+```html
+<button onclick=quiz() style="background: indianred; width: 480; height: 100; font-size: 30; color: white">
+    Начать игру
+</button>
+```
+
+
+
+
+
+
 >[!warning]
 >### ВНИМАНИЕ
 > Я не закончил полностью над этим документом, но скоро выложу коммит с добавлением нескольких проектов!
