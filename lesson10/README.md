@@ -1,11 +1,14 @@
 <div align="center">
 
+
 <div style="
 ">
   <h2>Lesson_10</h2>
 </div>
 
-
+>[!tip]
+Сейчас вы находитесь в: 
+`pythondeveloping` > `Lesson10` > `README.md`
 </div>
 
 >[!note]
