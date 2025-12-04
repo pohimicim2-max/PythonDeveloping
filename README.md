@@ -33,7 +33,7 @@
 > ### Последние обновления: *Labs Update v1.7*
 > ### *Main Update v1.32_Fix*
 > ### *Homework Update v1.0*
-> ### *Better Progression v.1.0*
+> ### *Better Progression v.1.1a*
 > ### Важное пояснение:
 > **Labs update** - То что затрагивает Папки `Other`       
 > **Homework Update** - `HomeWork` (Кроме `improved` и `Other`)    

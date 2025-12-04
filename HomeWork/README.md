@@ -11,12 +11,14 @@
 
 ## Добро пожаловать в папку с моими домашними заданиями.
 
->[!tip]
-Сейчас вы находитесь в: 
-`pythondeveloping` > `Homework` > `README.md`
+
 
 
 </div>
+
+>[!tip]
+Сейчас вы находитесь в: 
+`pythondeveloping` > `Homework` > `README.md`
 
 ##  Быстрая навигация:
 - [Lesson_1](#lesson_1)
