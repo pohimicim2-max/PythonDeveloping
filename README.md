@@ -32,7 +32,7 @@
 >[!note]
 > ### Последние обновления: *Labs Update v1.7*
 > ### *Main Update v1.32_Fix*
-> ### *Homework Update v1.1b*
+> ### *Homework Update v2.1*
 > ### *Better Progression v.1.0*
 > ### Важное пояснение:
 > **Labs update** - То что затрагивает Папки `Other`       

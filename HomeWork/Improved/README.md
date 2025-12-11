@@ -2,14 +2,15 @@
 
 # HomeWork - Impoved versions
 
->[!tip]
-Сейчас вы находитесь в: 
-`pythondeveloping` > `Homework` > `Improved` > `README.md`
+
 
 
 ## Добро пожаловать в папку с улучшенными версиями моих домашних заданий.
 </div>
 
+>[!tip]
+Сейчас вы находитесь в: 
+`pythondeveloping` > `Homework` > `Improved` > `README.md`
 
 >[!note]
 > ### Назначение этой папки

@@ -1379,7 +1379,852 @@ CS2_APP_ID = 730
 - **Темп роста:** от 10 до 1488 строк
 - **Усложнение функционала:** от консольного ввода до полноценных GUI-приложений
 
+
+
+# *Глава 2. Зима*
+
+# Lesson_10
+
+>[!tip]
+> ### Что делает этот код?
+> Простой код викторины с таймером и вопросами каждой сложности.
+
+>[!note]
+> В качестве оптимизации, код разделён на несколько файлов.
+
+### data.py
+
+```py
+questions = {
+    "ЛЕГКИЙ": [
+        {
+            "quest": "Какой оператор используется для возведения в степень в Python?",
+            "answers": ["^", "**", "^^", "pow()"],
+            "right": "**"
+        },
+        {
+            "quest": "Как получить длину списка в Python?",
+            "answers": ["list.size()", "list.length()", "len(list)", "list.count()"],
+            "right": "len(list)"
+        },
+        {
+            "quest": "Что выведет: print(type(5))?",
+            "answers": ["<class 'int'>", "<class 'float'>", "<class 'number'>", "Ошибка"],
+            "right": "<class 'int'>"
+        },
+        {
+            "quest": "Какой символ используется для однострочных комментариев?",
+            "answers": ["//", "#", "/*", "--"],
+            "right": "#"
+        },
+        {
+            "quest": "Как создать пустой список?",
+            "answers": ["list()", "[]", "list[]", "Оба варианта верны"],
+            "right": "Оба варианта верны"
+        }
+    ],
+    
+    "СРЕДНИЙ": [
+        {
+            "quest": "Что такое list comprehension?",
+            "answers": ["Ошибка в списке", "Способ создания списка в одну строку", "Метод сортировки списка", "Тип данных"],
+            "right": "Способ создания списка в одну строку"
+        },
+        {
+            "quest": "Чем отличается список от кортежа?",
+            "answers": ["Ничем", "Список изменяемый, кортеж - нет", "Кортеж быстрее", "Список может содержать только числа"],
+            "right": "Список изменяемый, кортеж - нет"
+        },
+        {
+            "quest": "Что такое *args и **kwargs?",
+            "answers": ["Специальные переменные для циклов", "Аргументы для передачи произвольного количества позиционных и именованных аргументов", "Модули для работы с аргументами", "Синтаксис для умножения"],
+            "right": "Аргументы для передачи произвольного количества позиционных и именованных аргументов"
+        },
+        {
+            "quest": "Что такое декоратор?",
+            "answers": ["Функция, изменяющая поведение другой функции", "Специальный синтаксис для классов", "Модуль для оформления кода", "Тип данных"],
+            "right": "Функция, изменяющая поведение другой функции"
+        },
+        {
+            "quest": "Как работает оператор 'is' в отличие от '=='?",
+            "answers": ["'is' сравнивает идентичность объектов, '==' - значения", "'is' для чисел, '==' для строк", "Это одно и то же", "'is' быстрее"],
+            "right": "'is' сравнивает идентичность объектов, '==' - значения"
+        }
+    ],
+    
+    "СЛОЖНЫЙ": [
+        {
+            "quest": "Что такое GIL (Global Interpreter Lock) в Python?",
+            "answers": ["Механизм синхронизации потоков, позволяющий выполнять только один поток за раз", "Глобальная блокировка для ускорения выполнения", "Модуль для работы с графикой", "Оптимизация памяти"],
+            "right": "Механизм синхронизации потоков, позволяющий выполнять только один поток за раз"
+        },
+        {
+            "quest": "Что такое MRO (Method Resolution Order)?",
+            "answers": ["Алгоритм сортировки методов при множественном наследовании", "Модуль для работы с регулярными выражениями", "Метод разрешения объектов в памяти", "Оптимизация выполнения кода"],
+            "right": "Алгоритм сортировки методов при множественном наследовании"
+        },
+        {
+            "quest": "Что такое дескрипторы (descriptors) в Python?",
+            "answers": ["Специальные объекты, реализующие протокол __get__, __set__, __delete__", "Методы для описания классов", "Декораторы для функций", "Аннотации типов"],
+            "right": "Специальные объекты, реализующие протокол __get__, __set__, __delete__"
+        },
+        {
+            "quest": "Что такое metaclass и когда её использовать?",
+            "answers": ["Класс, экземпляры которого являются классами, используется для создания API, ORM", "Класс для метапрограммирования, всегда лучше избегать", "Родительский класс для всех классов", "Специальный декоратор для классов"],
+            "right": "Класс, экземпляры которого являются классами, используется для создания API, ORM"
+        },
+        {
+            "quest": "Как работает механизм кэширования int'ов в Python (-5 до 256)?",
+            "answers": ["Интернирование (interning) часто используемых целых чисел", "Компиляторная оптимизация", "Кэширование в bytecode", "Особенность реализации CPython"],
+            "right": "Интернирование (interning) часто используемых целых чисел"
+        }
+    ],
+    
+    "ХАРДКОР ДЛЯ ДМИТРИЯ": [
+        {
+            "quest": "Как работает C3 linearization в MRO?",
+            "answers": ["Алгоритм, гарантирующий монотонность и предотвращающий неоднозначности при множественном наследовании", "Линейная оптимизация кода", "Способ компиляции Python", "Метод кэширования"],
+            "right": "Алгоритм, гарантирующий монотонность и предотвращающий неоднозначности при множественном наследовании"
+        },
+        {
+            "quest": "Как работает garbage collection для цикличных ссылок?",
+            "answers": ["Использует алгоритм подсчета ссылок + generational GC с mark-and-sweep", "Удаляет все объекты раз в час", "Не удаляет цикличные ссылки вообще", "Использует только reference counting"],
+            "right": "Использует алгоритм подсчета ссылок + generational GC с mark-and-sweep"
+        },
+        {
+            "quest": "Как работает механизм импорта модулей на уровне sys.meta_path?",
+            "answers": ["Использует finders и loaders из meta_path для поиска и загрузки модулей", "Ищет модули только в sys.path", "Компилирует все модули при запуске", "Использует кэширование через .pyc файлы"],
+            "right": "Использует finders и loaders из meta_path для поиска и загрузки модулей"
+        },
+        {
+            "quest": "Что такое coroutine и как она отличается от generator?",
+            "answers": ["Coroutine может принимать данные через .send(), generator только yield'ит, а также имеет дополнительные методы .throw() и .close()", "Это одно и то же", "Coroutine использует async/await, generator — yield", "Generator является подвидом coroutine"],
+            "right": "Coroutine может принимать данные через .send(), generator только yield'ит, а также имеет дополнительные методы .throw() и .close()"
+        },
+        {
+            "quest": "Как работает механизм декораторов с аргументами (@decorator(arg))?",
+            "answers": ["Создается функция-фабрика, которая принимает аргументы и возвращает декоратор", "Это синтаксическая ошибка", "Аргументы передаются напрямую в декорируемую функцию", "Использует магию __call__"],
+            "right": "Создается функция-фабрика, которая принимает аргументы и возвращает декоратор"
+        }
+    ]
+}
+```
+
+### funcs.py
+```py
+import data
+import random
+import os
+import pygame
+from plyer import notification
+from tkinter import messagebox
+import sys
+import tkinter as tk
+import time
+import webbrowser
+import threading
+
+class Colors:
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    CYAN = '\033[96m'
+    RESET = '\033[0m'
+
+score = 0
+quest_index = 0
+current_questions = []
+current_correct = ""
+quiz_active = False
+prison_triggered = False
+
+downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+jail_image_path = os.path.join(downloads_path, "jail.png")
+
+def send_warning():
+    messagebox.showinfo("ВНИМАНИЕ", "В коде присутствуется музыка. Убавьте немного пожалуйста :)")
+
+def init_quiz_by_difficulty(difficulty="ЛЕГКИЙ"):
+    global score, quest_index, current_questions, current_correct, quiz_active
+    
+    if difficulty == "ВСЕ":
+        all_questions = []
+        for diff in data.questions.values():
+            all_questions.extend(diff.copy())
+        current_questions = all_questions
+    elif difficulty in data.questions:
+        current_questions = data.questions[difficulty].copy()
+    else:
+        current_questions = data.questions["ЛЕГКИЙ"].copy()
+    
+    random.shuffle(current_questions)
+    score = 0
+    quest_index = 0
+    current_correct = ""
+    quiz_active = True
+    return True
+
+def init_custom_quiz(questions_list):
+    global score, quest_index, current_questions, current_correct, quiz_active
+    current_questions = questions_list.copy()
+    random.shuffle(current_questions)
+    score = 0
+    quest_index = 0
+    current_correct = ""
+    quiz_active = True
+    return True
+
+def get_random_questions(difficulty="ВСЕ", count=10):
+    if difficulty == "ВСЕ":
+        all_q = []
+        for diff in data.questions.values():
+            all_q.extend(diff.copy())
+        selected = all_q
+    elif difficulty in data.questions:
+        selected = data.questions[difficulty].copy()
+    else:
+        selected = []
+    
+    random.shuffle(selected)
+    return selected[:count] if count > 0 else selected
+
+def get_mixed_random_questions(count=15):
+    all_q = []
+    for diff in data.questions.values():
+        all_q.extend(diff.copy())
+    random.shuffle(all_q)
+    return all_q[:count] if count > 0 else all_q
+
+def get_progressive_questions(count=12):
+    difficulties = ["ЛЕГКИЙ", "СРЕДНИЙ", "СЛОЖНЫЙ", "ХАРДКОР ДЛЯ ДМИТРИЯ"]
+    result = []
+    
+    for i, diff in enumerate(difficulties):
+        if diff in data.questions:
+            q_list = data.questions[diff].copy()
+            random.shuffle(q_list)
+            needed = max(1, count // len(difficulties))
+            if i == len(difficulties) - 1:
+                needed = max(1, count - len(result))
+            result.extend(q_list[:needed])
+    
+    random.shuffle(result)
+    return result[:count]
+
+def generate_quest(QUEST, buttons, result_label=None):
+    global quest_index, current_questions, current_correct, quiz_active
+    
+    if not quiz_active:
+        if result_label:
+            result_label.config(text="ВИКТОРИНА НЕ АКТИВНА", fg="red")
+        return False
+    
+    if not current_questions:
+        QUEST.config(text="НЕТ ВОПРОСОВ")
+        if result_label:
+            result_label.config(text="")
+        return False
+    
+    if quest_index >= len(current_questions):
+        print(f"\n{'='*50}")
+        print(f"ВИКТОРИНА ЗАВЕРШЕНА! ФИНАЛЬНЫЙ СЧЁТ: {score}/{len(current_questions)}")
+        print(f"{'='*50}")
+        QUEST.config(text=f"ВИКТОРИНА ЗАВЕРШЕНА! СЧЁТ: {score}/{len(current_questions)}")
+        for btn in buttons:
+            btn.config(state="disabled")
+        if result_label:
+            result_label.config(text="НАЖМИТЕ 'РЕСТАРТ' ДЛЯ НОВОЙ ИГРЫ", fg="yellow")
+        quiz_active = False
+        return False
+    
+    current = current_questions[quest_index]
+    QUEST.config(text=current["quest"])
+    current_correct = current["right"]
+    
+    print(f"\n{'='*50}")
+    print(f"{Colors.GREEN}ВОПРОС {quest_index + 1}/{len(current_questions)}")
+    print(f"ТЕКУЩИЙ СЧЁТ: {score}")
+    print(f"{'='*50}")
+    print(f"ВОПРОС: {current['quest']}")
+    print(f"ПРАВИЛЬНЫЙ ОТВЕТ: НЕ СКАЖУ!{Colors.RESET}")
+    
+    answers = current["answers"].copy()
+    random.shuffle(answers)
+    
+    print("ВАРИАНТЫ:")
+    for i, ans in enumerate(answers):
+        print(f"  {i+1}. {ans}")
+    print(f"{'='*50}")
+    
+    for i, btn in enumerate(buttons):
+        if i < len(answers):
+            btn.config(text=answers[i], state="normal")
+        else:
+            btn.config(text="", state="disabled")
+    
+    if result_label:
+        result_label.config(text="")
+    
+    return True
+
+def check_answer(selected_index, QUEST, buttons, result_label=None, score_label=None):
+    global score, quest_index, current_correct, quiz_active
+    
+    if not quiz_active or quest_index >= len(current_questions):
+        return False
+    
+    selected_text = buttons[selected_index]["text"]
+    
+    print(f"\n► ВЫБРАН ОТВЕТ: {selected_text}")
+    print(f"► ПРАВИЛЬНЫЙ: {current_correct}")
+    
+    if selected_text == current_correct:
+        score += 1
+        print(f" ПРАВИЛЬНО! Текущий счёт: {score}")
+        if result_label:
+            result_label.config(text=" ПРАВИЛЬНО!", fg="green")
+        if score_label:
+            score_label.config(text=f"ОТЛИЧНО! +1", fg="green")
+            QUEST.after(1500, lambda: score_label.config(text=f"Счёт: {score}"))
+    else:
+        print(f" ОШИБКА! Текущий счёт: {score}")
+        if result_label:
+            result_label.config(text=f" НЕПРАВИЛЬНО! Правильно: {current_correct}", fg="red")
+        if score_label:
+            score_label.config(text="ПЛОХО! 0", fg="red")
+            QUEST.after(1500, lambda: score_label.config(text=f"Счёт: {score}"))
+    
+    quest_index += 1
+    
+    if quest_index < len(current_questions):
+        generate_quest(QUEST, buttons, result_label)
+    else:
+        print(f"\n{'='*50}")
+        print(f" ВИКТОРИНА ЗАВЕРШЕНА!")
+        print(f"ФИНАЛЬНЫЙ СЧЁТ: {score}/{len(current_questions)}")
+        print(f"ПРОЦЕНТ ПРАВИЛЬНЫХ: {int(score/len(current_questions)*100)}%")
+        print(f"{'='*50}")
+        
+        QUEST.config(text=f"КОНЕЦ! СЧЁТ: {score}/{len(current_questions)}")
+        for btn in buttons:
+            btn.config(state="disabled")
+        if result_label:
+            result_label.config(text="ВИКТОРИНА ЗАВЕРШЕНА", fg="green")
+        quiz_active = False
+    
+    return True
+
+def restart_quiz():
+    global score, quest_index, quiz_active
+    score = 0
+    quest_index = 0
+    quiz_active = True
+    return True
+
+def get_score():
+    return score
+
+def get_total_questions():
+    return len(current_questions) if current_questions else 0
+
+def get_current_question_num():
+    return quest_index + 1 if quest_index < len(current_questions) else len(current_questions)
+
+def is_quiz_active():
+    return quiz_active
+
+def is_quiz_finished():
+    return not quiz_active or quest_index >= len(current_questions)
+
+def send_goodluck():
+    notification.notify(
+    title="Совет",
+    message="Удачи.",
+    timeout=1,
+    toast=True
+)
+
+def advanced_prison_1488(root_window=None):
+    global prison_triggered
+    
+    if prison_triggered:
+        return
+    
+    prison_triggered = True
+    
+    try:
+        webbrowser.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    except:
+        pass
+    
+    if root_window is None:
+        root_window = tk.Tk()
+        root_window.withdraw()
+    
+    prison = tk.Toplevel(root_window)
+    prison.title("АДСКАЯ ТЮРЬМА ЗА ПЛОХОЙ РЕЗУЛЬТАТ")
+    prison.attributes('-fullscreen', True)
+    prison.configure(bg='#000000')
+    prison.attributes('-topmost', True)
+    
+    prison.protocol("WM_DELETE_WINDOW", lambda: None)
+    prison.resizable(False, False)
+    
+    prison.bind('<F11>', lambda e: "break")
+    prison.bind('<Escape>', lambda e: "break")
+    
+    sentence_time = 10
+    start_time = time.time()
+    
+    main_frame = tk.Frame(prison, bg='#000000')
+    main_frame.place(relx=0.5, rely=0.5, anchor='center')
+    
+    title_label = tk.Label(
+        main_frame,
+        text="ВЫ НЕ ЗНАЕТЕ ИДЕАЛЬНО ПАЙТОН!",
+        font=("Arial", 36, "bold"),
+        fg="red",
+        bg='#000000'
+    )
+    title_label.pack(pady=30)
+    
+    timer_label = tk.Label(
+        main_frame,
+        text=f"Осталось: {sentence_time} секунд",
+        font=("Comic Sans MS", 28),
+        fg="yellow",
+        bg='#000000'
+    )
+    timer_label.pack(pady=20)
+    
+    progress_frame = tk.Frame(main_frame, bg='#000000')
+    progress_frame.pack(pady=20)
+    
+    progress_bar = tk.Canvas(progress_frame, width=800, height=30, bg='#333333', highlightthickness=0)
+    progress_bar.pack()
+    progress_fill = progress_bar.create_rectangle(0, 0, 0, 30, fill='red', outline='')
+    
+    quotes = [
+        "МАКСИМ ЖДЕТ, ПОКА ВЫ ПОСМОТРИТЕ ЕГО КОД!",
+        "ПЛОХОЙ РЕЗУЛЬТАТ = ТЮРЬМА!",
+        "148 СЕКУНД РАЗМЫШЛЕНИЙ О СВОИХ ОШИБКАХ",
+        "РИКРОЛЛ - ЛУЧШЕЕ НАКАЗАНИЕ!",
+        "НАДЕЮСЬ, ВАМ НРАВИТСЯ МУЗЫКА!",
+        "ВЫ ЗАСЛУЖИЛИ ЭТО!",
+        "ПОДУМАЙТЕ О СВОЁМ ПОВЕДЕНИИ!",
+        "СЛЕДУЮЩИЙ РАЗ УЧИТЕ ПАЙТОН ЛУЧШЕ!"
+    ]
+    
+    quote_label = tk.Label(
+        main_frame,
+        text=quotes[0],
+        font=("Arial", 16, "italic"),
+        fg="#cccccc",
+        bg='#000000',
+        wraplength=1000,
+        justify="center"
+    )
+    quote_label.pack(pady=30)
+    
+    exit_button = tk.Button(
+        main_frame,
+        text="ЗАКЛЮЧЁН",
+        font=("Arial", 20, "bold"),
+        bg="#8B0000",
+        fg="white",
+        state="disabled",
+        width=25,
+        height=3,
+        command=prison.destroy
+    )
+    exit_button.pack(pady=40)
+    
+    rickroll_label = tk.Label(
+        prison,
+        text="На фоне играет рикролл (я вас зарикроллил хаа)",
+        font=("Arial", 14),
+        fg="#00ff00",
+        bg='#000000'
+    )
+    rickroll_label.place(relx=0.5, rely=0.95, anchor='center')
+    
+    def update_prison():
+        elapsed = time.time() - start_time
+        remaining = max(0, sentence_time - elapsed)
+        
+        timer_label.config(text=f"Осталось: {int(remaining)} секунд")
+        progress = (sentence_time - remaining) / sentence_time
+        progress_bar.coords(progress_fill, 0, 0, 800 * progress, 30)
+        
+        quote_index = int(elapsed) % len(quotes)
+        quote_label.config(text=quotes[quote_index])
+        
+        if int(elapsed) % 2 == 0:
+            colors = ["yellow", "red", "green", "cyan", "magenta", "orange"]
+            timer_label.config(fg=colors[int(elapsed) % len(colors)])
+        
+        if remaining <= 0:
+            timer_label.config(text="ВРЕМЯ ВЫШЛО! ВЫ СВОБОДНЫ!", fg="#00ff00")
+            exit_button.config(state="normal", bg="#006400", text="ВЫЙТИ НА СВОБОДУ!")
+            quote_label.config(text="Надеюсь, этот урок запомнится надолго!")
+            rickroll_label.config(text="Музыка остановилась! Вы свободны!")
+        else:
+            prison.after(1000, update_prison)
+    
+    update_prison()
+    return prison
+
+def fake_console_error_trap(root_window):
+    if hasattr(fake_console_error_trap, 'already_called'):
+        return
+    fake_console_error_trap.already_called = True
+    
+    print(f"\n{'='*80}")
+    print(f"{Colors.RED}ERROR: Critical failure in quiz evaluation module{Colors.RESET}")
+    print(f"{'='*80}")
+    
+    error_lines = [
+        "Traceback (most recent call last):",
+        '  File "c:\\Users\\Qkrt\\OneDrive\\Документы\\GitHub\\PythonDeveloping\\lesson10\\main.py", line 147, in end_quiz',
+        '    percentage = (funcs.get_score() / funcs.get_total_questions()) * 100',
+        "ZeroDivisionError: division by zero",
+        "",
+        "During handling of the above exception, another exception occurred:",
+        "",
+        "Traceback (most recent call last):",
+        '  File "c:\\Users\\Qkrt\\OneDrive\\Документы\\GitHub\\PythonDeveloping\\lesson10\\main.py", line 153, in <lambda>',
+        '    mainWindow.after(2000, lambda: funcs.advanced_prison_1488(mainWindow))',
+        "MemoryError: Cannot allocate 1488 bytes in protected memory",
+        "",
+        "Stack dump:",
+        "0x7FF8A1B3C4D0: quiz_core::evaluate()",
+        "0x7FF8A1B3C5A0: tkinter_callback_dispatcher()",
+        "0x7FF8A1B3C670: python_internal_error_handler()",
+        "HEAP CORRUPTION DETECTED at 0x000001B14881488",
+        "CRITICAL: PYTHON INTERPRETER IS UNSTABLE",
+        "",
+        f"{Colors.YELLOW}Recommended action: Restart application and check quiz logic{Colors.RESET}",
+        f"{Colors.CYAN}Press Ctrl+C to abort... (just kidding, it won't help){Colors.RESET}",
+        f"{'='*80}"
+    ]
+    
+    def print_slowly():
+        for line in error_lines:
+            print(line)
+            time.sleep(0.3)
+        
+        time.sleep(1)
+        print(f"\n{Colors.RED}Attempting to recover...{Colors.RESET}")
+        time.sleep(1)
+        print(f"{Colors.YELLOW}Recovery failed. Memory allocation error 0x1488{Colors.RESET}")
+        time.sleep(1)
+        print(f"{Colors.RED}Switching to emergency protocol 'PRISON_MODE'{Colors.RESET}")
+        time.sleep(1)
+        print(f"{Colors.CYAN}Initializing punitive measures in 3...{Colors.RESET}")
+        sys.stdout.flush()
+    
+    error_thread = threading.Thread(target=print_slowly)
+    error_thread.daemon = True
+    error_thread.start()
+    
+    root_window.after(4000, lambda: advanced_prison_1488(root_window))
+```
+
+### main.py
+
+```py
+from tkinter import *
+from tkinter import messagebox
+from funcs import advanced_prison_1488, fake_console_error_trap
+import funcs 
+import pygame
+import os
+from funcs import send_warning, send_goodluck
+from plyer import notification
+import threading
+import time
+from funcs import Colors
+from PIL import Image, ImageTk
+
+os.system("")
+pygame.init()
+
+downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+music_file = "RETAILATION.mp3"
+music_path = os.path.join(downloads_path, music_file)
+
+TIME_LIMIT = 90
+time_left = TIME_LIMIT
+timer_running = False
+prison_triggered = False
+
+def start_music():
+    class Colors:
+        RED = '\033[91m'
+        GREEN = '\033[92m'
+        YELLOW = '\033[93m'
+        CYAN = '\033[96m'
+        RESET = '\033[0m'
+
+    if os.path.exists(music_path):
+        try:
+            pygame.mixer.music.load(music_path)
+            pygame.mixer.music.play(-1)
+            print(f"{Colors.GREEN}МУЗЫКА УСПЕШНО ЗАПУЩЕНА ИЗ:{Colors.RESET} {Colors.YELLOW}{music_path}{Colors.RESET}")
+            print(f"{Colors.GREEN}СЕЙЧАС ИГРАЕТ: {music_file}{Colors.RESET}")
+            return True
+        except Exception as oshibka:
+            notification.notify(
+                title="ОШИБКА",
+                message=f"Не удалось запустить музыку: {oshibka}",
+                app_name="Дз Максима (не)",
+                timeout=3,
+                toast=True,
+            )
+    else:
+        print(f"{Colors.RED}Файл не найден: {music_path}")
+        print(f"Пожалуйста, положите музыку в: {downloads_path}{Colors.RESET}")
+        notification.notify(
+            title="FATAL ERROR MUSIC",
+            message=f"МУЗЫКА НЕ НАЙДЕНА, ПОЖАЛУЙСТА, ПОЛОЖИТЕ ЕЕ В: {downloads_path}",
+            timeout=3,
+            toast=True
+        )
+        return False
+
+def update_timer():
+    global time_left, timer_running
+    if time_left > 0 and timer_running:
+        time_left -= 1
+        timer_label.config(text=f"ОСТАЛОСЬ: {time_left} СЕКУНД")
+        
+        if time_left == 60:
+            try:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(music_path)
+                pygame.mixer.music.play(-1, start=89)
+                print("Музыка переключена на 1:29 (осталось 60 сек)")
+                try:
+                    notification.notify(
+                        title="СООБЩЕНИЕ МАКСИМА",
+                        message=f"ДМИТРИЙ, У МЕНЯ КОД НЕ РАБОТАЕТ, КСТАТИ ОСТАЛОСЬ {time_left} СЕКУНД!",
+                        timeout=3
+                    )
+                except:
+                    pass
+            except Exception as maksim:
+                notification.notify(
+                    title="ОШИБКА",
+                    message=f"Не удалось переключить музыку: {maksim}",
+                    app_name="Дз Максима (не)",
+                    timeout=3,
+                    toast=True,
+                )
+        
+        if time_left == 30:
+            try:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(music_path)
+                pygame.mixer.music.play(0, start=235)
+            except Exception as Maskim2:
+                print(f"ОШИБКА: {Maskim2}")
+            try:
+                notification.notify(
+                    title="СООБЩЕНИЕ МАКСИМА",
+                    message=f"ДМИТРИЙ, ОСТАЛОСЬ {time_left} СЕКУНД, А МОЙ КОД ДОСИХПОР НЕ РАБОТАЕТ!",
+                    timeout=3,
+                    toast=True
+                )
+            except:
+                pass
+        
+        if time_left <= 30:
+            timer_label.config(fg="red")
+        elif time_left <= 60:
+            timer_label.config(fg="orange")
+        
+        mainWindow.after(1000, update_timer)
+    elif time_left <= 0 and timer_running:
+        timer_running = False
+        time_up()
+
+def start_timer():
+    global timer_running, time_left
+    time_left = TIME_LIMIT
+    timer_running = True
+    timer_label.config(text=f"ОСТАЛОСЬ: {time_left} СЕКУНД", fg="green")
+    update_timer()
+
+def stop_timer():
+    global timer_running
+    timer_running = False
+
+def end_quiz(reason="ВИКТОРИНА ЗАВЕРШЕНА"):
+    global prison_triggered
+    
+    stop_timer()
+    
+    try:
+        pygame.mixer.music.stop()
+        pygame.time.delay(100)
+        pygame.mixer.music.load(music_path)
+        pygame.mixer.music.play(0, start=281)
+        print(f"Музыка переключена на 4:41 ({reason})")
+    except Exception as e:
+        print(f"Не удалось переключить музыку: {e}")
+    
+    for btn in buttons:
+        btn.config(state="disabled")
+    
+    QUEST.config(text=f"{reason}! СЧЁТ: {funcs.get_score()}/{funcs.get_total_questions()}")
+    
+    if funcs.get_total_questions() > 0 and not prison_triggered:
+        percentage = (funcs.get_score() / funcs.get_total_questions()) * 100
+        if percentage < 50:
+            prison_triggered = True
+            mainWindow.after(1000, lambda: funcs.fake_console_error_trap(mainWindow))
+    
+    try:
+        if reason == "ВРЕМЯ ВЫШЛО":
+            notification.notify(
+                title="ВРЕМЯ ВЫШЛО!",
+                message=f"Ваш счёт: {funcs.get_score()} из {funcs.get_total_questions()}",
+                timeout=5,
+                app_name="Викторина Бобика",
+                toast=True,
+            )
+        else:
+            notification.notify(
+                title="ВИКТОРИНА ЗАВЕРШЕНА!",
+                message=f"Вы ответили на все вопросы! Счёт: {funcs.get_score()}/{funcs.get_total_questions()}",
+                timeout=5,
+                app_name="Викторина Бобика",
+                toast=True
+            )
+    except Exception as e:
+        print(f"Не удалось показать уведомление: {e}")
+
+def time_up():  
+    end_quiz("ВРЕМЯ ВЫШЛО")
+
+send_warning()
+send_goodluck()
+
+mainWindow = Tk()
+width = 700
+height = 400
+
+mainWindow.title("ВИКТОРИНА БОБИКА")
+mainWindow.resizable(False, False)
+
+screen_width = mainWindow.winfo_screenwidth()
+screen_height = mainWindow.winfo_screenheight()
+
+x_offset = (screen_width - width) // 2
+y_offset = (screen_height - height) // 2
+
+mainWindow.geometry(f"{width}x{height}+{x_offset}+{y_offset}")
+
+timer_label = Label(text=f"ОСТАЛОСЬ: {TIME_LIMIT} СЕКУНД", font=("Comic Sans MS", 14, "bold"), fg="green")
+timer_label.place(anchor="center", relx=0.5, rely=0.05)
+
+QUEST = Label(text="", font=("Comic Sans MS", 16))
+QUEST.place(anchor="center", relx=0.5, rely=0.15)
+
+info = Label(text="", font=("Comic Sans MS", 12), fg="red")
+info.place(anchor="center", relx=0.5, rely=0.25)
+
+score_label = Label(text="Счёт: 0", font=("Comic Sans MS", 12), fg="blue")
+score_label.place(x=10, y=10)
+
+buttons = []
+
+def update_score():
+    score_label.config(text=f"Счёт: {funcs.get_score()}")
+
+def on_button_click(idx):
+    old_finished = funcs.is_quiz_finished()
+    funcs.check_answer(idx, QUEST, buttons, info, score_label)
+    update_score()
+    if not old_finished and funcs.is_quiz_finished():
+        end_quiz("ВИКТОРИНА ЗАВЕРШЕНА")
+        stop_timer()
+    
+    if funcs.is_quiz_finished():
+        stop_timer()
+
+for i in range(4):
+    btn = Button(width=100, height=1, font=("Comic Sans MS", 14), 
+                 command=lambda idx=i: on_button_click(idx))
+    btn.place(anchor="center", relx=0.5, rely=0.25 + 0.15 * (i + 1))
+    buttons.append(btn)
+
+funcs.init_quiz_by_difficulty("ВСЕ")
+funcs.generate_quest(QUEST, buttons, info)
+update_score()
+start_music()
+start_timer()
+
+mainWindow.mainloop()
+stop_timer()
+```
+>[!note]
+> ### Структура
+> `data.py` - Вопросы   
+> `funcs.py` - Фукнции   
+> `main.py` - Основной код
+
+## ✅ Плюсы этого кода:
+1. **Чёткое разделение на модули** (Функции, вопросы, интерфейс)
+2. **Глобальные переменные**
+3. **Уведомления от Максима**
+4. **Звуковое сопровождение**
+5. **Счетчик и рандомный подбор вопросов**
+6. **Индикатор времени по цвету**
+
+## ❌ Минусы:
+1. **Избыточные глобальные переменные** (`score`, `quest_index`, `current_questions`,
+`prison_triggered` и другие.)
+2. **Жесткие зависимости между модулями**
+3. **Смешивание логики в `funcs.py`**
+4. **Ошибки и уязвимости - Возможное `ZeroDivisionError` (если `get_total_questions()` вернёт 0)
+5. **Утечка памяти**
+
+## 💡 Что я могу добавить в этот код?
+1. **Систему сохранения** (Например в `txt` формат)
+2. **Лидерборд** лучших результатов у пользователя
+3. **Настройки** (громкость музыки, шрифты)
+*Но я думаю что громкость музыки не обязательно добавлять*
+
+>[!note]
+> ### Музыка
+> Музыка была взята из [Ютуб видео](https://www.youtube.com/watch?v=gBoEr5VvmQA)
+
+>[!caution]
+> ### Подведём итоги
+> С помощью этого кода можно научится оптимизировать свои проекты, чтобы функции, вопросы и интерфейс не превратились в кашу.
+
+
+>[!warning]
+> ### Не конец главы
+> Новые проекты будут скоро добавлены.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [ Вернуться в начало](#homework)
+
+
 
 
 
