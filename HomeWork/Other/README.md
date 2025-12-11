@@ -9,13 +9,15 @@
 
 
 
->[!tip]
-Сейчас вы находитесь в: 
-`pythondeveloping` > `Homework` > `Other` > `README.md`
+
 </div>
 
 > [!note]
 > ### Главный репозиторий всегда находится в конце этого документа (В каждом документе этой репозитории.)
+
+>[!tip]
+Сейчас вы находитесь в: 
+`pythondeveloping` > `Homework` > `Other` > `README.md`
 
 # Project1.luau
 ```lua
