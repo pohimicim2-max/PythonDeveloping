@@ -1,0 +1,34 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": [],
+    "editor.tokenColorCustomizations": {
+        "functions": "#8fb4ff",
+        "strings": "#72e9b6", 
+        "numbers": "#FCC419",
+        "keywords": "#eb7973",
+        "variables": "#64a0de",
+        "comments": "#616f81",
+        "textMateRules": [
+            {
+                "scope": "keyword",
+                "settings": {
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "variable.other.object",
+                "settings": {
+                    "foreground": "#7eb4ff"
+                }
+            }
+        ]
+    },
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "workbench.iconTheme": "vscode-icons",
+    "editor.fontSize": 20,
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.minimap.enabled": true,
+    "editor.lineNumbers": "on"
+}

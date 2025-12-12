@@ -10,6 +10,7 @@ import threading
 import time
 from funcs import Colors
 from PIL import Image, ImageTk
+import webbrowser
 
 os.system("")
 pygame.init()
@@ -148,6 +149,9 @@ def end_quiz(reason="ВИКТОРИНА ЗАВЕРШЕНА"):
         if percentage < 50:
             prison_triggered = True
             mainWindow.after(1000, lambda: funcs.fake_console_error_trap(mainWindow))
+        elif percentage >= 51:
+            webbrowser.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            print(f"{Colors.CYAN}ОТКРЫВАЮ РИКРОЛЛ ПОБЕДЫ{Colors.RESET}")
     
     try:
         if reason == "ВРЕМЯ ВЫШЛО":

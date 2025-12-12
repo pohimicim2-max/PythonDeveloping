@@ -414,3 +414,4 @@ def fake_console_error_trap(root_window):
     error_thread.start()
     
     root_window.after(4000, lambda: advanced_prison_1488(root_window))
+
