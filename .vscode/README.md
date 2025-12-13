@@ -65,17 +65,17 @@
 
 ### 3. Настройки подсветки синтаксиса
 ```json
-"functions": "#8fb4ff"      // Функции — СИНИЙ
-"strings": "#72e9b6"        // Строки — ЗЕЛЁНЫЙ  
-"numbers": "#FCC419"        // Числа — ЖЁЛТЫЙ
-"keywords": "#eb7973"       // Ключевые слова (if, for) — КРАСНЫЙ
-"variables": "#64a0de"      // Переменные — ГОЛУБОЙ
-"comments": "#616f81"       // Комментарии — СЕРЫЙ
+"functions": "#8fb4ff"      // Функции - СИНИЙ
+"strings": "#72e9b6"        // Строки - ЗЕЛЁНЫЙ  
+"numbers": "#FCC419"        // Числа - ЖЁЛТЫЙ
+"keywords": "#eb7973"       // Ключевые слова (if, for) - РАСНЫЙ
+"variables": "#64a0de"      // Переменные -  ГОЛУБОЙ
+"comments": "#616f81"       // Комментарии - СЕРЫЙ
 ```
 TextMate правила (дополнительные)
 ```json
-"keyword": { "fontStyle": "bold" }  // Ключевые слова ЖИРНЫЕ
-"variable.other.object": { "foreground": "#7eb4ff" }  // Объекты — СВЕТЛО-СИНИЙ
+"keyword": { "fontStyle": "bold" }  // Ключевые слова - ЖИРНЫЕ
+"variable.other.object": { "foreground": "#7eb4ff" }  // Объекты - СВЕТЛО-СИНИЙ
 ```
 ### 4. Тема и внешний вид (Расширения)
 ```json
